@@ -13,7 +13,7 @@
   "keywords": [
     "fastify",
     "typeorm",
-    "typeorm"
+    "nodejs"
   ],
   "author": "Davide D'Antonio <davide.dantonio@webeetle.com>",
   "license": "MIT",

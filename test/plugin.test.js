@@ -13,9 +13,19 @@ fastify.register(plugin, [{
   "database": "fastbee"
 }])
 
-fastify.ready(err => {
+fastify.ready(async err => {
   if (err) {
     console.log(err)
   }
+  console.log(fastify.typeorm)
+
+  const users = await fastify.typeorm.get('mysql')
+    .createQueryBuilder()
+    .select('*')
+    .from('user', "u")
+    .where("u.username = :username", { username: "ddantonio" })
+    .getMany()
+
+  console.log(users)
   console.log('fastify is running')
 })
