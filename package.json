@@ -1,0 +1,33 @@
+{
+  "name": "fastify-typeormdb",
+  "version": "1.0.0",
+  "description": "Fastify plugin for TypeORM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidedantonio/fastify-typeormdb.git"
+  },
+  "keywords": [
+    "fastify",
+    "typeorm",
+    "typeorm"
+  ],
+  "author": "Davide D'Antonio <davide.dantonio@webeetle.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidedantonio/fastify-typeormdb/issues"
+  },
+  "homepage": "https://github.com/davidedantonio/fastify-typeormdb#readme",
+  "dependencies": {
+    "fastify-plugin": "^1.5.0",
+    "typeorm": "^0.2.17"
+  },
+  "devDependencies": {
+    "fastify": "^2.3.0",
+    "standard": "^12.0.1",
+    "tap": "^13.1.8"
+  }
+}
