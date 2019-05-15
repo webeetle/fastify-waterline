@@ -27,7 +27,10 @@
   },
   "devDependencies": {
     "fastify": "^2.3.0",
+    "mongodb": "^3.2.4",
     "mysql2": "^1.6.5",
+    "pg": "^7.11.0",
+    "sqlite3": "^4.0.8",
     "standard": "^12.0.1",
     "tap": "^13.1.8"
   }
