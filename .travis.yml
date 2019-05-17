@@ -12,7 +12,7 @@ services:
   - postgresql
 
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test; USE test; CREATE TABLE IF NOT EXISTS users (id int NOT NULL PRIMARY KEY AUTO_INCREMENT, first_name VARCHAR(100), last_name VARCHAR(100), username VARCHAR(100)); INSERT INTO users (first_name, last_name, username) VALUES ("Davide", "D'Antonio", "ddantonio");'
   - psql -c 'create database travis_ci_test;'
 
 notifications:

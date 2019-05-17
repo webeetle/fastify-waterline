@@ -15,6 +15,12 @@ async function decorateFastifyInstance (fastify, connections, next) {
   }
 
   fastify.decorate('typeorm', typeORM)
+  fastify.addHook('onClose', async (instance, done) => {
+    for (let connection of connections) {
+      let conn = instance.typeorm.getManager(connection.name).connection
+      await conn.close()
+    }
+  })
   next()
 }
 
@@ -23,7 +29,11 @@ function fastifyTypeORM (fastify, options, next) {
     return next(Error('fastify-typeormdb has already been registered'))
   }
 
-  let connections = {}
+  if (!options) {
+    return next(Error('fastify-typeormdb: no connection info provided'))
+  }
+
+  let connections = []
   if (Array.isArray(options)) {
     for (let i = 0; i < options.length; i++) {
       if (!options[i].name) {
