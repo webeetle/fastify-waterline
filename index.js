@@ -11,7 +11,7 @@ async function decorateFastifyInstance (fastify, connections, next) {
 }
 
 function fastifyWaterline (fastify, options, next) {
-  if (fastify.typeorm) {
+  if (fastify.waterline) {
     return next(Error('fastify-waterline has already been registered'))
   }
 
@@ -31,6 +31,8 @@ function fastifyWaterline (fastify, options, next) {
   } else {
     connections.push(options)
   }
+  console.log(connections)
+  process.exit(1)
 
   decorateFastifyInstance(fastify, Object.values(connections), next)
 }

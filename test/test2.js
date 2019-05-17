@@ -16,21 +16,12 @@ test('test TypeORM connection to MySQL', function (t) {
     username: 'root',
     database: 'test',
     synchronize: true,
-    entitySchemas: [
+    entities: [
       'test/entity/*.js'
-  ],
+    ]
   }])
 
   fastify.ready(async err => {
-    let repository = await fastify.typeorm.getManager('mysql')
 
-    console.log(repository)
-    /*let user = new User()
-    user.firstName = 'Davide'
-    user.lastName = 'Davide'
-    user.username = 'ddantonio'
-
-    let insertResult = await repository.save(user)
-    t.ok(insertResult)*/
   })
 })
