@@ -1,21 +1,9 @@
 'use strict'
 
-const { EntitySchema } = require('typeorm')
-
-const User = new EntitySchema({
-  id: {
-    primary: true,
-    generated: true
-  },
-  firstName: {
-    type: String
-  },
-  lastName: {
-    type: String
-  },
-  username: {
-    type: String
+module.exports = {
+  attributes: {
+    firstName: { type: 'string', required: true },
+    lastName: { type: 'string', required: true },
+    username: { type: 'string', required: true }
   }
-})
-
-module.export = User
+}
