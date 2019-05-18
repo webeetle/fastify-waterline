@@ -1,35 +1,127 @@
 'use strict'
 
+const fs = require('fs')
 const fp = require('fastify-plugin')
 const Waterline = require('waterline')
 const DiskAdapter = require('sails-disk')
 const MySQLAdapter = require('sails-mysql')
 const MongoAdapter = require('sails-mongo')
 const PostgresAdapter = require('sails-postgresql')
+const { promisify } = require('util')
+const path = require('path')
+const readdir = promisify(fs.readdir)
+const lstat = promisify(fs.lstat)
+const _ = require('lodash')
+const FastifyWaterline = require('./lib/fastifyWaterline')
+
+const ADAPTERS = {
+  'mysql': MySQLAdapter,
+  'mongo': MongoAdapter,
+  'postgresql': PostgresAdapter,
+  'disk': DiskAdapter
+}
 
 async function decorateFastifyInstance (fastify, connections, next) {
   if (connections.length === 0) {
-    return next(Error('fastify-waterline: no connection info provided'))
+    next(Error('fastify-waterline: no connection info provided'))
+    return
+  }
+
+  let adapters = {}
+  let datastores = {}
+  let models = {}
+  for (let connection of connections) {
+    if (!connection.adapter) {
+      next(Error('fastify-waterline: specify a valid adapter: mysql, mongo, postgresql, disk'))
+      return
+    }
+
+    if (Object.keys(ADAPTERS).indexOf(connection.adapter) === -1) {
+      next(Error('fastify-waterline: adapter name not valid: mysql, mongo, postgresql, disk'))
+      return
+    }
+
+    Object.assign(adapters, {
+      [`sails-${connection.adapter}`]: ADAPTERS[connection.adapter]
+    })
+
+    const connectionName = connection.name || 'default'
+    delete connection.name
+    connection.adapter = `sails-${connection.adapter}`
+
+    let entities = connection.entities || null
+    let entitiesFolder = connection.entitiesFolder || ''
+    delete connection.entities
+    delete connection.entitiesFolder
+
+    Object.assign(datastores, {
+      [connectionName]: connection
+    })
+
+    if (entities) {
+      let keys = Object.keys(entities)
+
+      for (let key of keys) {
+        if (!entities[key].datastore) {
+          entities[key].datastore = connectionName
+        }
+
+        Object.assign(models, {
+          [key]: entities[key]
+        })
+      }
+    }
+
+    if (entitiesFolder) {
+      const folder = path.resolve(__dirname, entitiesFolder)
+
+      try {
+        await lstat(folder)
+      } catch (e) {
+        next(Error(`fastify-waterline: Entities folder ${entitiesFolder} does not exist.`))
+        return
+      }
+
+      let files = await readdir(folder)
+      for (let index = 0; index < files.length; index++) {
+        let file = files[index]
+        if (!file.match(/.js$/)) {
+          continue
+        }
+
+        const entityName = _.camelCase(file.replace(/.js$/g, ''))
+        const entity = require(path.join(folder, file))
+
+        if (!entity.datastore) {
+          entity.datastore = connectionName
+        }
+
+        Object.assign(models, {
+          [entityName]: entity
+        })
+      }
+    }
   }
 
   Waterline.start({
-    adapters: {
-      'sails-disk': DiskAdapter,
-      'sails-mysql': MySQLAdapter,
-      'sails-mongo': MongoAdapter,
-      'sails-postgresql': PostgresAdapter
-    },
+    adapters: adapters,
+    datastores: datastores,
+    models: models
+  }, function (err, orm) {
+    if (err) {
+      next(Error('fastify-waterline: Could not start up the Waterline ORM\n' + err))
+      return
+    }
+
+    fastify.decorate('fw', new FastifyWaterline(orm))
+    fastify.addHook('onClose', (_, done) => Waterline.stop(orm, done))
+    next()
   })
-  next()
 }
 
 function fastifyWaterline (fastify, options, next) {
   if (fastify.waterline) {
     return next(Error('fastify-waterline has already been registered'))
-  }
-
-  if (!options) {
-    return next(Error('fastify-waterline: no connection info provided'))
   }
 
   let connections = []
@@ -42,10 +134,10 @@ function fastifyWaterline (fastify, options, next) {
       connections.push(options[i])
     }
   } else {
-    connections.push(options)
+    if (Object.keys(options).length > 0) {
+      connections.push(options)
+    }
   }
-  console.log(connections)
-  process.exit(1)
 
   decorateFastifyInstance(fastify, Object.values(connections), next)
 }

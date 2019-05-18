@@ -1,2 +1,3 @@
-# fastify-typeorm
-Fastify plugin for TypeORM
+# fastify-waterline
+
+
