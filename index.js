@@ -2,11 +2,24 @@
 
 const fp = require('fastify-plugin')
 const Waterline = require('waterline')
+const DiskAdapter = require('sails-disk')
+const MySQLAdapter = require('sails-mysql')
+const MongoAdapter = require('sails-mongo')
+const PostgresAdapter = require('sails-postgresql')
 
 async function decorateFastifyInstance (fastify, connections, next) {
   if (connections.length === 0) {
     return next(Error('fastify-waterline: no connection info provided'))
   }
+
+  Waterline.start({
+    adapters: {
+      'sails-disk': DiskAdapter,
+      'sails-mysql': MySQLAdapter,
+      'sails-mongo': MongoAdapter,
+      'sails-postgresql': PostgresAdapter
+    },
+  })
   next()
 }
 
