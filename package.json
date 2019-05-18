@@ -1,5 +1,5 @@
 {
-  "name": "fastify-typeormdb",
+  "name": "fastify-waterline",
   "version": "1.0.0",
   "description": "Fastify plugin for Waterline ORM",
   "main": "index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davidedantonio/fastify-waterline.git"
+    "url": "git+https://github.com/webeetle/fastify-waterline"
   },
   "keywords": [
     "fastify",
@@ -21,9 +21,9 @@
   "author": "Davide D'Antonio <davide.dantonio@webeetle.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/davidedantonio/fastify-waterline/issues"
+    "url": "https://github.com/webeetle/fastify-waterline/issues"
   },
-  "homepage": "https://github.com/davidedantonio/fastify-waterline#readme",
+  "homepage": "https://github.com/webeetle/fastify-waterline#readme",
   "dependencies": {
     "fastify-plugin": "^1.5.0",
     "lodash": "^4.17.11",
