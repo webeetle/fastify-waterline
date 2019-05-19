@@ -1,6 +1,6 @@
 # fastify-waterline
 
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) ![Build Status](https://travis-ci.com/webeetle/fastify-waterline.svg?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/davidedantonio/create-fastify-app.svg)](https://greenkeeper.io/)
 
 `fastify-waterline` add a [Waterline](https://waterlinejs.org/) ORM instance to your [Fastify](https://github.com/fastify/fastify) project.
 
