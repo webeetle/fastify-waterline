@@ -97,7 +97,7 @@ If you feel you can help in any way, be it with examples, extra testing, or new 
 
 The code follows the Standard code style.
 
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard) [![Greenkeeper badge](https://badges.greenkeeper.io/webeetle/fastify-waterline.svg)](https://greenkeeper.io/)
 
 ## Acknowledgements
 
