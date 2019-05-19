@@ -9,11 +9,9 @@ node_js:
 services:
   - mysql
   - mongodb
-  - postgresql
 
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS test; USE test; CREATE TABLE IF NOT EXISTS users (id int NOT NULL PRIMARY KEY AUTO_INCREMENT, first_name VARCHAR(100), last_name VARCHAR(100), username VARCHAR(100)); INSERT INTO users (first_name, last_name, username) VALUES ("Davide", "D'Antonio", "ddantonio");'
-  - psql -c 'create database travis_ci_test;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test; USE test; CREATE TABLE `users` (`id` int(11) NOT NULL AUTO_INCREMENT,`firstName` varchar(100) DEFAULT NULL,`lastName` varchar(100) DEFAULT NULL,`username` varchar(100) DEFAULT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;'
 
 notifications:
   email:
