@@ -1,6 +1,6 @@
 {
   "name": "fastify-waterline",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fastify plugin for Waterline ORM",
   "main": "index.js",
   "scripts": {
