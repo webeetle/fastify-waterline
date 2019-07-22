@@ -26,7 +26,7 @@
   "homepage": "https://github.com/webeetle/fastify-waterline#readme",
   "dependencies": {
     "fastify-plugin": "^1.5.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "sails-disk": "^1.1.2",
     "sails-mongo": "^1.0.1",
     "sails-mysql": "^1.0.1",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "fastify": "^2.3.0",
-    "standard": "^13.0.1",
+    "standard": "^13.1.0",
     "tap": "^14.1.1"
   }
 }

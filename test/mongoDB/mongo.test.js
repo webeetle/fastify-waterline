@@ -20,7 +20,7 @@ test('mongo adapter', function (t) {
     t.error(err)
 
     const UserModel = await fastify.fw.getModel('user')
-    let newUser = await UserModel.create({
+    const newUser = await UserModel.create({
       firstName: 'Davide',
       lastName: 'D Antonio',
       username: 'ddantonio'

@@ -15,10 +15,10 @@ const _ = require('lodash')
 const FastifyWaterline = require('./lib/fastifyWaterline')
 
 const ADAPTERS = {
-  'mysql': MySQLAdapter,
-  'mongo': MongoAdapter,
-  'postgresql': PostgresAdapter,
-  'disk': DiskAdapter
+  mysql: MySQLAdapter,
+  mongo: MongoAdapter,
+  postgresql: PostgresAdapter,
+  disk: DiskAdapter
 }
 
 async function decorateFastifyInstance (fastify, connections, next) {
@@ -27,10 +27,10 @@ async function decorateFastifyInstance (fastify, connections, next) {
     return
   }
 
-  let adapters = {}
-  let datastores = {}
-  let models = {}
-  for (let connection of connections) {
+  const adapters = {}
+  const datastores = {}
+  const models = {}
+  for (const connection of connections) {
     if (!connection.adapter) {
       next(Error('fastify-waterline: specify a valid adapter: mysql, mongo, postgresql, disk'))
       return
@@ -49,8 +49,8 @@ async function decorateFastifyInstance (fastify, connections, next) {
     delete connection.name
     connection.adapter = `sails-${connection.adapter}`
 
-    let entities = connection.entities || null
-    let entitiesFolder = connection.entitiesFolder || ''
+    const entities = connection.entities || null
+    const entitiesFolder = connection.entitiesFolder || ''
     delete connection.entities
     delete connection.entitiesFolder
 
@@ -59,9 +59,9 @@ async function decorateFastifyInstance (fastify, connections, next) {
     })
 
     if (entities) {
-      let keys = Object.keys(entities)
+      const keys = Object.keys(entities)
 
-      for (let key of keys) {
+      for (const key of keys) {
         if (!entities[key].datastore) {
           entities[key].datastore = connectionName
         }
@@ -82,9 +82,9 @@ async function decorateFastifyInstance (fastify, connections, next) {
         return
       }
 
-      let files = await readdir(folder)
+      const files = await readdir(folder)
       for (let index = 0; index < files.length; index++) {
-        let file = files[index]
+        const file = files[index]
         if (!file.match(/.js$/)) {
           continue
         }
@@ -124,7 +124,7 @@ function fastifyWaterline (fastify, options, next) {
     return next(Error('fastify-waterline has already been registered'))
   }
 
-  let connections = []
+  const connections = []
   if (Array.isArray(options)) {
     for (let i = 0; i < options.length; i++) {
       if (!options[i].name) {
