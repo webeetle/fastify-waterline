@@ -36,6 +36,6 @@
   "devDependencies": {
     "fastify": "^2.3.0",
     "standard": "^14.0.0",
-    "tap": "^14.1.1"
+    "tap": "^14.8.0"
   }
 }
