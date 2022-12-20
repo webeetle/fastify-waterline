@@ -29,8 +29,8 @@
     "lodash": "^4.17.15",
     "sails-disk": "^2.0.0",
     "sails-mongo": "^1.0.1",
-    "sails-mysql": "^1.0.1",
-    "sails-postgresql": "^1.0.2",
+    "sails-mysql": "^3.0.0",
+    "sails-postgresql": "^5.0.1",
     "waterline": "^0.13.6"
   },
   "devDependencies": {
